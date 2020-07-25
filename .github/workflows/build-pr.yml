@@ -1,4 +1,4 @@
-name: Build Docker image for pull requests (testing only)
+name: Build Docker image for pull request
 
 on: pull_request
 
@@ -16,5 +16,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
           registry: docker.pkg.github.com
-          repository: creased/${{github.repository}}/testing
+          repository: $('${{ github.repository }}'.ToLower())/testing
           push: false

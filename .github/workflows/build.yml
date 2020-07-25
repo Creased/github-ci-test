@@ -1,4 +1,4 @@
-name: Build Docker image for master, dev and stable branches
+name: Build and publish Docker image
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
           registry: docker.pkg.github.com
-          repository: creased/${{github.repository}}/testing
+          repository: $('${{ github.repository }}'.ToLower())/testing
           tag_with_ref: true
           tag_with_sha: true
           add_git_labels: true
