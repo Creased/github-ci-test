@@ -1,0 +1,20 @@
+name: Build Docker image for pull requests (testing only)
+
+on: pull_request
+
+jobs:
+  build:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the git repo
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: docker.pkg.github.com
+          repository: creased/${{github.repository}}/testing
+          push: false
