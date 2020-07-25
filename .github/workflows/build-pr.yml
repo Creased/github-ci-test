@@ -2,6 +2,9 @@ name: Build Docker image for pull request
 
 on: pull_request
 
+env:
+  IMAGE_NAME: testing
+
 jobs:
   build:
     name: Build Docker image
@@ -10,11 +13,14 @@ jobs:
       - name: Checkout the git repo
         uses: actions/checkout@v2
 
+      - name: Set Docker image name
+        run: echo "::set-env name=IMAGE_ID::$(echo -n '${{ github.repository }}/${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')"
+
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
           password: ${{ github.token }}
           registry: docker.pkg.github.com
-          repository: $('${{ github.repository }}'.ToLower())/testing
+          repository: ${{ env.IMAGE_ID }}
           push: false
